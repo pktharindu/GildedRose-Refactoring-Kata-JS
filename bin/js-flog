@@ -1,3 +1,0 @@
-#!/usr/bin/env node
-
-require('../js-flog/cli').cli(process.argv)

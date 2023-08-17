@@ -5,8 +5,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "flog": "./bin/js-flog ./src/gilded_rose.js"
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -24,9 +23,6 @@
   },
   "homepage": "https://github.com/emilybache/GildedRose-Refactoring-Kata",
   "devDependencies": {
-    "@babel/parser": "^7.9.6",
-    "@babel/traverse": "^7.9.6",
-    "chalk": "^4.0.0",
     "jest": "^24.9.0"
   }
 }
