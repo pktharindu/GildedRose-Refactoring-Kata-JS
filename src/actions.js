@@ -7,7 +7,6 @@ const Actions = (qualityChange, sellInChange = -1, min = 0, max = 50) => (item) 
 
 const DropToZero = Actions(-Infinity);
 const NoNothing = Actions(0, 0, -Infinity, Infinity);
-const UpQuality = (by) => Actions(by);
-const DownQuality = (by) => Actions(-by);
+const UpdateQuality = (by) => Actions(by);
 
-module.exports = {DropToZero, NoNothing, UpQuality, DownQuality}
+module.exports = {DropToZero, NoNothing, UpdateQuality}

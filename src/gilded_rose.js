@@ -1,6 +1,6 @@
 const {When, Otherwise, Always} = require('./strategy');
 const {registerStrategySet, executeStrategy} = require('./strategy_set');
-const {DropToZero, NoNothing, UpQuality, DownQuality} = require('./actions');
+const {DropToZero, NoNothing, UpdateQuality} = require('./actions');
 
 class Item {
     constructor(name, sellIn, quality) {
@@ -11,14 +11,14 @@ class Item {
 }
 
 registerStrategySet(item => item.name === "Aged Brie", [
-    When(item => item.sellIn > 0).then(UpQuality(1)),
-    Otherwise(UpQuality(2))
+    When(item => item.sellIn > 0).then(UpdateQuality(1)),
+    Otherwise(UpdateQuality(2))
 ]);
 
 registerStrategySet(item => item.name === "Backstage passes to a TAFKAL80ETC concert", [
-    When(item => item.sellIn > 10).then(UpQuality(1)),
-    When(item => item.sellIn > 5).then(UpQuality(2)),
-    When(item => item.sellIn > 0).then(UpQuality(3)),
+    When(item => item.sellIn > 10).then(UpdateQuality(1)),
+    When(item => item.sellIn > 5).then(UpdateQuality(2)),
+    When(item => item.sellIn > 0).then(UpdateQuality(3)),
     Otherwise(DropToZero)
 ])
 
@@ -27,13 +27,13 @@ registerStrategySet(item => item.name === "Sulfuras, Hand of Ragnaros", [
 ]);
 
 registerStrategySet(item => item.name === "Conjured Mana Cake", [
-    When(item => item.sellIn > 0).then(DownQuality(2)),
-    Otherwise(DownQuality(4))
+    When(item => item.sellIn > 0).then(UpdateQuality(-2)),
+    Otherwise(UpdateQuality(-4))
 ]);
 
 registerStrategySet(() => true, [
-    When(item => item.sellIn > 0).then(DownQuality(1)),
-    Otherwise(DownQuality(2))
+    When(item => item.sellIn > 0).then(UpdateQuality(-1)),
+    Otherwise(UpdateQuality(-2))
 ]);
 
 class Shop {
