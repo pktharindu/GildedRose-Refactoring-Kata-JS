@@ -28,7 +28,10 @@ const When = (condition) => {
     return {
         condition,
         updater: () => {},
-        then: action => this.updater = action
+        then: action => ({
+          condition,
+          updater: action
+        })
     }
 }
 
@@ -51,14 +54,14 @@ const registerStrategySet = (condition, strategySet) => {
 const getStrategySet = (item) => strategySets.find(strategySet => strategySet.condition(item)).strategySet
 
 registerStrategySet(item => item.name === "Aged Brie", [
-  When(sellIn => sellIn >= 0).then(UpBy1),
+  When(sellIn => sellIn > 0).then(UpBy1),
   Otherwise(UpBy2)
 ]);
 
 registerStrategySet(item => item.name === "Backstage passes to a TAFKAL80ETC concert", [
-  When(sellIn => sellIn >= 10).then(UpBy1),
-  When(sellIn => sellIn >= 5).then(UpBy2),
-  When(sellIn => sellIn >= 0).then(UpBy3),
+  When(sellIn => sellIn > 10).then(UpBy1),
+  When(sellIn => sellIn > 5).then(UpBy2),
+  When(sellIn => sellIn > 0).then(UpBy3),
   Otherwise(Nullify)
 ])
 
@@ -67,12 +70,12 @@ registerStrategySet(item => item.name === "Sulfuras, Hand of Ragnaros", [
 ]);
 
 registerStrategySet(item => item.name === "Conjured Mana Cake", [
-  When(sellIn => sellIn >= 0).then(DownBy2),
+  When(sellIn => sellIn > 0).then(DownBy2),
   Otherwise(DownBy4)
 ]);
 
 registerStrategySet(() => true, [
-  When(sellIn => sellIn >= 0).then(DownBy1),
+  When(sellIn => sellIn > 0).then(DownBy1),
   Otherwise(DownBy2)
 ]);
 
