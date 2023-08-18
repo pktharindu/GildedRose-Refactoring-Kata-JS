@@ -1,4 +1,4 @@
-const {getStrategySet, resetStrategySets, registerStrategySet, executeStrategy} = require('../src/strategy_factory');
+const {getStrategySet, resetStrategySets, registerStrategySet, applyStrategy} = require('../src/strategy_factory');
 const {When, Otherwise} = require('../src/conditionals');
 
 describe('Strategy factory', function () {
@@ -29,7 +29,7 @@ describe('Strategy factory', function () {
         ];
 
         registerStrategySet(() => true, strategies);
-        executeStrategy(2);
+        applyStrategy(2);
 
         expect(action1).not.toHaveBeenCalled();
         expect(action2).toHaveBeenCalledWith(2);
@@ -49,7 +49,7 @@ describe('Strategy factory', function () {
         ];
 
         registerStrategySet(() => true, strategies);
-        executeStrategy(666);
+        applyStrategy(666);
 
         expect(action1).not.toHaveBeenCalled();
         expect(action2).not.toHaveBeenCalled();

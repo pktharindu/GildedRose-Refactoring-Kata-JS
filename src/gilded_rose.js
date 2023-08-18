@@ -1,4 +1,4 @@
-const {executeStrategy} = require('./strategy_factory');
+const {applyStrategy} = require('./strategy_factory');
 
 class Item {
     constructor(name, sellIn, quality) {
@@ -14,7 +14,7 @@ class Shop {
     }
 
     updateQuality() {
-        return this.items.forEach(executeStrategy);
+        return this.items.forEach(applyStrategy);
     }
 }
 

@@ -29,9 +29,8 @@ let strategySets = [
     ])
 ];
 
-
 const getStrategySet = (item) => strategySets.find(strategySet => strategySet.condition(item)).strategySet;
 
-const executeStrategy = (item) => getStrategySet(item).find(strategy => strategy.condition(item)).action(item);
+const applyStrategy = (item) => getStrategySet(item).find(strategy => strategy.condition(item)).action(item);
 
-module.exports = {executeStrategy, getStrategySet}
+module.exports = {applyStrategy, getStrategySet}
