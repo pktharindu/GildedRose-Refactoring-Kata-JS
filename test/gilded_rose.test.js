@@ -327,7 +327,7 @@ describe('Backstage pass', function () {
     });
 });
 
-describe.skip('Conjured', function () {
+describe('Conjured', function () {
     it('should decrease quality by 2 before sellIn', function () {
         const item = new Item('Conjured Mana Cake', 10, 10);
         const gildedRose = new Shop([item]);
@@ -344,7 +344,7 @@ describe.skip('Conjured', function () {
 
         gildedRose.updateQuality();
 
-        expect(item.sellIn).toBe(1);
+        expect(item.sellIn).toBe(0);
         expect(item.quality).toBe(8);
     });
 
