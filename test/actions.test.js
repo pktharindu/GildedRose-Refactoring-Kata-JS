@@ -27,9 +27,9 @@ describe('Actions', function () {
         expect(item.sellIn).toBe(9);
         expect(item.quality).toBe(11);
 
-        UpdateQuality(-1)(item);
+        UpdateQuality(-2)(item);
 
         expect(item.sellIn).toBe(8);
-        expect(item.quality).toBe(10);
+        expect(item.quality).toBe(9);
     });
 });
