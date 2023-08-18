@@ -307,24 +307,24 @@ describe.skip('Conjured', function () {
         expect(item.quality).toBe(8);
     });
 
-    it('should decrease quality by 2 on sellIn', function () {
+    it('should decrease quality by 4 on sellIn', function () {
         const item = new Item('Conjured Mana Cake', 0, 10);
         const gildedRose = new Shop([item]);
 
         gildedRose.updateQuality();
 
         expect(item.sellIn).toBe(-1);
-        expect(item.quality).toBe(8);
+        expect(item.quality).toBe(6);
     });
 
-    it('should decrease quality by 2 past sellIn', function () {
+    it('should decrease quality by 4 past sellIn', function () {
         const item = new Item('Conjured Mana Cake', -1, 10);
         const gildedRose = new Shop([item]);
 
         gildedRose.updateQuality();
 
         expect(item.sellIn).toBe(-2);
-        expect(item.quality).toBe(8);
+        expect(item.quality).toBe(6);
     });
 
     it('should not decrease quality below 0', function () {
