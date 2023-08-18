@@ -4,7 +4,16 @@ class BaseUpdateStrategy {
         this.maxQuality = 50;
     }
     update(item) {
-      // TODO: Implement this method
+        item.sellIn -= 1;
+        item.quality -= 1;
+
+        if (item.sellIn <= 0) {
+            item.quality -= 1;
+        }
+
+        if (item.quality < this.minQuality) {
+            item.quality = this.minQuality;
+        }
     }
 }
 

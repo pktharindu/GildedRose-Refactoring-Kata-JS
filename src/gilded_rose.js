@@ -19,7 +19,7 @@ class Shop {
 
     updateQuality() {
         for (const item of this.items) {
-            const updateStrategy = this.updateStrategyLookup[item.name] || new BaseUpdateStrategy();
+            const updateStrategy = this.updateStrategyLookup[item.name] || new BaseUpdateStrategy;
 
             updateStrategy.update(item);
         }
