@@ -12,21 +12,16 @@ const AgedBrieUpdateStrategy = (item) => {
 };
 
 const BackstagePassUpdateStrategy = (item) => {
-    item.quality += 1;
+    const qualityChanges = [
+        { condition: (sellIn) => sellIn <= 0, qualityChange: -item.quality },
+        { condition: (sellIn) => sellIn <= 5, qualityChange: 3 },
+        { condition: (sellIn) => sellIn <= 10, qualityChange: 2 },
+        { condition: () => true, qualityChange: 1 }
+    ];
 
-    if (item.sellIn <= 10) {
-        item.quality += 1;
-    }
+    const { qualityChange } = qualityChanges.find(({ condition }) => condition(item.sellIn));
 
-    if (item.sellIn <= 5) {
-        item.quality += 1;
-    }
-
-    if (item.sellIn <= 0) {
-        item.quality = 0;
-    }
-
-    item.quality = Math.min(maxQuality, item.quality);
+    item.quality = Math.min(maxQuality, Math.max(minQuality, item.quality + qualityChange));
     item.sellIn -= 1;
 };
 
