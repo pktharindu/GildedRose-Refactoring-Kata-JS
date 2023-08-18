@@ -1,5 +1,5 @@
 const {StrategySet} = require('../src/strategy_factory');
-const {When, Otherwise} = require('../src/conditionals');
+const {When, Fallback} = require('../src/conditionals');
 
 describe('Strategy factory', function () {
     it('handles right strategy from a set', function () {
@@ -14,13 +14,13 @@ describe('Strategy factory', function () {
             When(x => x.x === 1).then([
                 When(x => x.y === 1).then(action11),
                 When(x => x.y === 2).then(action12),
-                Otherwise(action1d)
+                Fallback(action1d)
             ]),
             When(x => x.x === 2).then([
                 When(x => x.y === 1).then(action21),
-                Otherwise(action2d)
+                Fallback(action2d)
             ]),
-            Otherwise(fallback)
+            Fallback(fallback)
         ]);
 
         jest.clearAllMocks();

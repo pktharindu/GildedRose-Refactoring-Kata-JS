@@ -6,24 +6,22 @@ const When = (condition) => {
                 return {
                     condition,
                     children: arg
-                }
+                };
             } else {
                 return {
                     condition,
                     action: arg
-                }
+                };
             }
         }
-    }
+    };
 };
 
-const Otherwise = (action) => {
+const Fallback = (action) => {
     return {
         condition: () => true,
         action
-    }
+    };
 };
 
-const Always = Otherwise;
-
-module.exports = {When, Otherwise, Always};
+module.exports = {When, Fallback};
