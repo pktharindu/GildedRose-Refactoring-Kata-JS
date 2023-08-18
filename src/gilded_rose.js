@@ -1,4 +1,5 @@
 const { When, Otherwise, Always } = require('./strategy');
+const { registerStrategySet, ececuteStrategy } = require('./strategy_set');
 const { UpBy1, UpBy2, UpBy3, Nullify, Noop, DownBy1, DownBy2, DownBy4 } = require('./actions');
 
 class Item {
@@ -8,17 +9,6 @@ class Item {
     this.quality = quality;
   }
 }
-
-const strategySets = [];
-
-const registerStrategySet = (condition, strategySet) => {
-  strategySets.push({
-    condition,
-    strategySet
-  });
-}
-
-const getStrategySet = (item) => strategySets.find(strategySet => strategySet.condition(item)).strategySet
 
 registerStrategySet(item => item.name === "Aged Brie", [
   When(item => item.sellIn > 0).then(UpBy1),
@@ -46,15 +36,13 @@ registerStrategySet(() => true, [
   Otherwise(DownBy2)
 ]);
 
-const updateItem = (item) => getStrategySet(item).find(strategy => strategy.condition(item)).action(item);
-
 class Shop {
   constructor(items=[]){
     this.items = items;
   }
 
   updateQuality() {
-    return this.items.forEach(updateItem);
+    return this.items.forEach(ececuteStrategy);
   }
 }
 
