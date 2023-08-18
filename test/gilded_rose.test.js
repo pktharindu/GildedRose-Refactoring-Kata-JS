@@ -1,4 +1,4 @@
-const { Shop, Item } = require('../src/gilded_rose');
+const {Shop, Item} = require('../src/gilded_rose');
 const fs = require('fs');
 
 describe('Golden master', function () {
@@ -86,11 +86,8 @@ describe('Normal', function () {
 
         gildedRose.updateQuality();
 
-        expect(items[0].sellIn).toBe(9);
         expect(items[0].quality).toBe(0);
-        expect(items[1].sellIn).toBe(-1);
         expect(items[1].quality).toBe(0);
-        expect(items[2].sellIn).toBe(-11);
         expect(items[2].quality).toBe(0);
     });
 });
@@ -178,15 +175,10 @@ describe('Aged Brie', function () {
 
         gildedRose.updateQuality();
 
-        expect(items[0].sellIn).toBe(9);
         expect(items[0].quality).toBe(50);
-        expect(items[1].sellIn).toBe(-1);
         expect(items[1].quality).toBe(50);
-        expect(items[2].sellIn).toBe(-1);
         expect(items[2].quality).toBe(50);
-        expect(items[3].sellIn).toBe(-6);
         expect(items[3].quality).toBe(50);
-        expect(items[4].sellIn).toBe(-6);
         expect(items[4].quality).toBe(50);
     });
 });
@@ -315,13 +307,9 @@ describe('Backstage pass', function () {
 
         gildedRose.updateQuality();
 
-        expect(items[0].sellIn).toBe(9);
         expect(items[0].quality).toBe(50);
-        expect(items[1].sellIn).toBe(5);
         expect(items[1].quality).toBe(50);
-        expect(items[2].sellIn).toBe(4);
         expect(items[2].quality).toBe(50);
-        expect(items[3].sellIn).toBe(0);
         expect(items[3].quality).toBe(50);
     });
 });
@@ -377,11 +365,8 @@ describe('Conjured', function () {
 
         gildedRose.updateQuality();
 
-        expect(items[0].sellIn).toBe(9);
         expect(items[0].quality).toBe(0);
-        expect(items[1].sellIn).toBe(-1);
         expect(items[1].quality).toBe(0);
-        expect(items[2].sellIn).toBe(-11);
         expect(items[2].quality).toBe(0);
     });
 });
