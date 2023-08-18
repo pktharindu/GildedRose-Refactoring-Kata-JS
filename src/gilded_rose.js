@@ -1,6 +1,6 @@
 const {When, Otherwise, Always} = require('./strategy');
 const {registerStrategySet, executeStrategy} = require('./strategy_set');
-const {DropToZero, NoNothing, UpdateQuality} = require('./actions');
+const {DropToZero, DoNothing, UpdateQuality} = require('./actions');
 
 class Item {
     constructor(name, sellIn, quality) {
@@ -23,7 +23,7 @@ registerStrategySet(item => item.name === "Backstage passes to a TAFKAL80ETC con
 ])
 
 registerStrategySet(item => item.name === "Sulfuras, Hand of Ragnaros", [
-    Always(NoNothing)
+    Always(DoNothing)
 ]);
 
 registerStrategySet(item => item.name === "Conjured Mana Cake", [

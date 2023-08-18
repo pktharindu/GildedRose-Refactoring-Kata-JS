@@ -1,5 +1,5 @@
 const {Item} = require('../src/gilded_rose');
-const {DropToZero, NoNothing, UpdateQuality} = require('../src/actions');
+const {DropToZero, DoNothing, UpdateQuality} = require('../src/actions');
 
 
 describe('Actions', function () {
@@ -14,7 +14,7 @@ describe('Actions', function () {
     it('can do nothing', function () {
         const item = new Item('test', 10, 666);
 
-        NoNothing(item);
+        DoNothing(item);
         expect(item.sellIn).toBe(10);
         expect(item.quality).toBe(666);
     });
