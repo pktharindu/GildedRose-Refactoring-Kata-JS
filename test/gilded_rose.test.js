@@ -295,3 +295,53 @@ describe('Backstage passes', function () {
         expect(items[3].quality).toBe(50);
     });
 });
+
+describe.skip('Conjured', function () {
+    it('should decrease quality by 2 before sellIn', function () {
+        const item = new Item('Conjured Mana Cake', 10, 10);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(9);
+        expect(item.quality).toBe(8);
+    });
+
+    it('should decrease quality by 2 on sellIn', function () {
+        const item = new Item('Conjured Mana Cake', 0, 10);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(-1);
+        expect(item.quality).toBe(8);
+    });
+
+    it('should decrease quality by 2 past sellIn', function () {
+        const item = new Item('Conjured Mana Cake', -1, 10);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(-2);
+        expect(item.quality).toBe(8);
+    });
+
+    it('should not decrease quality below 0', function () {
+        const items = [
+            new Item('Conjured Mana Cake', 10, 0),
+            new Item('Conjured Mana Cake', 0, 0),
+            new Item('Conjured Mana Cake', -10, 0),
+        ];
+        const gildedRose = new Shop(items);
+
+        gildedRose.updateQuality();
+
+        expect(items[0].sellIn).toBe(9);
+        expect(items[0].quality).toBe(0);
+        expect(items[1].sellIn).toBe(-1);
+        expect(items[1].quality).toBe(0);
+        expect(items[2].sellIn).toBe(-11);
+        expect(items[2].quality).toBe(0);
+    });
+});
