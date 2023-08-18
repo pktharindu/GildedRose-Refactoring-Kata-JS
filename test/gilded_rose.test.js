@@ -86,7 +86,7 @@ describe('Normal', function () {
     });
 });
 
-describe.skip('Aged Brie', function () {
+describe('Aged Brie', function () {
     it('should increase quality by 1 before sellIn', function () {
         const item = new Item('Aged Brie', 10, 10);
         const gildedRose = new Shop([item]);
