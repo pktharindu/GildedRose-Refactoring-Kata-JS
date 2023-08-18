@@ -1,4 +1,4 @@
-const {When, Otherwise, Always, Condition} = require('./strategy');
+const {When, Otherwise, Always, StrategySet} = require('./strategy');
 const {DropToZero, NoNothing, UpdateQuality} = require('./actions');
 
 class Item {
@@ -9,7 +9,7 @@ class Item {
     }
 }
 
-const strategySets = [
+const strategies = StrategySet([
     When(item => item.name === "Aged Brie").then([
         When(item => item.sellIn > 0).then(UpdateQuality(1)),
         Otherwise(UpdateQuality(2))
@@ -35,9 +35,7 @@ const strategySets = [
         When(item => item.sellIn > 0).then(UpdateQuality(-1)),
         Otherwise(UpdateQuality(-2))
     ])
-]
-
-const updateQuality = (item) => strategySets.find(Condition(item)).strategySet.find(Condition(item)).action(item);
+]);
 
 class Shop {
     constructor(items = []) {
@@ -45,7 +43,7 @@ class Shop {
     }
 
     updateQuality() {
-        return this.items.forEach(updateQuality);
+        return this.items.forEach(strategies.execute);
     }
 }
 

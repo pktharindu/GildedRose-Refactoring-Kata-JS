@@ -5,7 +5,7 @@ const When = (condition) => {
             if(Array.isArray(arg)) {
                 return {
                     condition,
-                    strategySet: arg
+                    children: arg
                 }
             } else {
                 return {
@@ -25,6 +25,15 @@ const Otherwise = (action) => {
 
 const Always = Otherwise
 
-const Condition = item => strategy => strategy.condition(item)
+const findStrategy = (strategySet, item) => {
+    const found = strategySet.find(strategy => strategy.condition(item));
+    return found.children ? findStrategy(found.children, item) : found;
+}
 
-module.exports = {When, Otherwise, Always, Condition}
+const StrategySet = strategySet => {
+    return {
+        execute: item => findStrategy(strategySet, item).action(item)
+    }
+}
+
+module.exports = {When, Otherwise, Always, StrategySet}
