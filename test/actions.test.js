@@ -22,8 +22,14 @@ describe('Actions', function () {
     it('can update quality', function () {
         const item = new Item('test', 10, 10);
 
-        UpdateQuality(item);
+        UpdateQuality(1)(item);
+
         expect(item.sellIn).toBe(9);
         expect(item.quality).toBe(11);
+
+        UpdateQuality(-2)(item);
+
+        expect(item.sellIn).toBe(8);
+        expect(item.quality).toBe(9);
     });
 });
