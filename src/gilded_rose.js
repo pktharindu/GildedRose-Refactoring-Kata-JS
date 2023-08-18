@@ -13,9 +13,33 @@ const Updater = (qualityChange, sellInChange = -1, min = 0, max = 50) => (item) 
   item.quality = clamp(item.quality + qualityChange, min, max);
 }
 
+const UpBy1 = Updater(1);
+const UpBy2 = Updater(2);
+const UpBy3 = Updater(3);
+const Nullify = Updater(-Infinity);
+const Noop = Updater(0, 0, -Infinity, Infinity);
+const DownBy1 = Updater(-1);
+const DownBy2 = Updater(-2);
+const DownBy4 = Updater(-4);
+
 const strategySets = [];
 
-const Strategy = (condition, updater) => ({ condition, updater });
+const When = (condition) => {
+    return {
+        condition,
+        updater: () => {},
+        then: action => this.updater = action
+    }
+}
+
+const Otherwise = (updater) => {
+  return {
+    condition: () => true,
+    updater
+  }
+}
+
+const Allways = Otherwise
 
 const registerStrategySet = (condition, strategySet) => {
   strategySets.push({
@@ -27,29 +51,29 @@ const registerStrategySet = (condition, strategySet) => {
 const getStrategySet = (item) => strategySets.find(strategySet => strategySet.condition(item)).strategySet
 
 registerStrategySet(item => item.name === "Aged Brie", [
-  Strategy(sellIn => sellIn >= 0, Updater(1)),
-  Strategy(() => true, Updater(2))
+  When(sellIn => sellIn >= 0).then(UpBy1),
+  Otherwise(UpBy2)
 ]);
 
 registerStrategySet(item => item.name === "Backstage passes to a TAFKAL80ETC concert", [
-  Strategy(sellIn => sellIn >= 10, Updater(1)),
-  Strategy(sellIn => sellIn >= 5, Updater(2)),
-  Strategy(sellIn => sellIn >= 0, Updater(3)),
-  Strategy(() => true, Updater(-Infinity))
+  When(sellIn => sellIn >= 10).then(UpBy1),
+  When(sellIn => sellIn >= 5).then(UpBy2),
+  When(sellIn => sellIn >= 0).then(UpBy3),
+  Otherwise(Nullify)
 ])
 
 registerStrategySet(item => item.name === "Sulfuras, Hand of Ragnaros", [
-  Strategy(() => true, Updater(0, 0, -Infinity, Infinity))
+  Allways(Noop)
 ]);
 
 registerStrategySet(item => item.name === "Conjured Mana Cake", [
-  Strategy(sellIn => sellIn >= 0, Updater(-2)),
-  Strategy(() => true, Updater(-2))
+  When(sellIn => sellIn >= 0).then(DownBy2),
+  Otherwise(DownBy4)
 ]);
 
 registerStrategySet(() => true, [
-  Strategy(sellIn => sellIn >= 0, Updater(-1)),
-  Strategy(() => true, Updater(-2))
+  When(sellIn => sellIn >= 0).then(DownBy1),
+  Otherwise(DownBy2)
 ]);
 
 const updateItem = (item) => getStrategySet(item).find(strategy => strategy.condition(item.sellIn)).updater(item);
