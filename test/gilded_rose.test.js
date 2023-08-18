@@ -1,4 +1,5 @@
-const {Shop, Item} = require('../src/gilded_rose');
+const Shop = require('../src/gilded_rose');
+const Item = require('../src/item');
 const fs = require('fs');
 
 describe('Golden master', function () {
