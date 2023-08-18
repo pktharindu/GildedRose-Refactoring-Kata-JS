@@ -16,9 +16,7 @@ class BackstagePassUpdateStrategy extends DefaultUpdateStrategy {
             item.quality = 0;
         }
 
-        if (item.quality > this.maxQuality) {
-            item.quality = this.maxQuality;
-        }
+        item.quality = Math.min(this.maxQuality, item.quality);
 
         item.sellIn -= 1;
     }

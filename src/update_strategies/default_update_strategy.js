@@ -4,16 +4,7 @@ class DefaultUpdateStrategy {
         this.maxQuality = 50;
     }
     update(item) {
-        item.quality -= 1;
-
-        if (item.sellIn <= 0) {
-            item.quality -= 1;
-        }
-
-        if (item.quality < this.minQuality) {
-            item.quality = this.minQuality;
-        }
-
+        item.quality = Math.max(this.minQuality, item.sellIn <= 0 ? item.quality - 2 : item.quality - 1);
         item.sellIn -= 1;
     }
 }
