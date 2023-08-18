@@ -12,7 +12,7 @@ const StrategySet = strategySet => {
     }
 }
 
-const strategies = StrategySet([
+const strategyFactory = StrategySet([
     When(item => item.name === "Aged Brie").then([
         When(item => item.sellIn > 0).then(UpdateQuality(1)),
         Otherwise(UpdateQuality(2))
@@ -40,4 +40,4 @@ const strategies = StrategySet([
     ])
 ]);
 
-module.exports = {strategies, StrategySet}
+module.exports = {strategyFactory, StrategySet}

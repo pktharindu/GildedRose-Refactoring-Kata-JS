@@ -7,13 +7,13 @@ describe('Strategy factory', function () {
     });
 
     it('finds right strategy set', function () {
-        registerStrategySet(x => x === 1, 'strategies-1');
-        registerStrategySet(() => true, 'strategies-2');
+        registerStrategySet(x => x === 1, 'strategyFactory-1');
+        registerStrategySet(() => true, 'strategyFactory-2');
 
         getStrategySet(1);
 
-        expect(getStrategySet(1)).toBe('strategies-1');
-        expect(getStrategySet(666)).toBe('strategies-2');
+        expect(getStrategySet(1)).toBe('strategyFactory-1');
+        expect(getStrategySet(666)).toBe('strategyFactory-2');
     });
 
     it('finds and executes strategy', function () {
@@ -22,13 +22,13 @@ describe('Strategy factory', function () {
         const action2 = jest.fn();
         const action3 = jest.fn();
 
-        const strategies = [
+        const strategyFactory = [
             When(x => x === 1).then(action1),
             When(x => x === 2).then(action2),
             Otherwise(action3),
         ];
 
-        registerStrategySet(() => true, strategies);
+        registerStrategySet(() => true, strategyFactory);
         applyStrategy(2);
 
         expect(action1).not.toHaveBeenCalled();
@@ -42,13 +42,13 @@ describe('Strategy factory', function () {
         const action2 = jest.fn();
         const action3 = jest.fn();
 
-        const strategies = [
+        const strategyFactory = [
             When(x => x === 1).then(action1),
             When(x => x === 2).then(action2),
             Otherwise(action3),
         ];
 
-        registerStrategySet(() => true, strategies);
+        registerStrategySet(() => true, strategyFactory);
         applyStrategy(666);
 
         expect(action1).not.toHaveBeenCalled();
