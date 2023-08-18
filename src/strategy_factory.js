@@ -6,11 +6,9 @@ const findStrategy = (strategySet, item) => {
     return found.children ? findStrategy(found.children, item) : found;
 };
 
-const StrategySet = strategySet => {
-    return {
-        handle: item => findStrategy(strategySet, item).action(item)
-    }
-};
+const StrategySet = strategySet => ({
+    handle: item => findStrategy(strategySet, item).action(item)
+});
 
 const strategyFactory = StrategySet([
     When(item => item.name === "Aged Brie").then([
