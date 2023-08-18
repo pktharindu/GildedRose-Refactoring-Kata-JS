@@ -35,7 +35,7 @@ describe('Golden master', function () {
     });
 });
 
-describe('Normal items', function () {
+describe('Normal', function () {
     it('should decrease sellIn and quality by 1 before sellIn', function () {
         const item = new Item('normal', 10, 10);
         const gildedRose = new Shop([item]);
@@ -96,6 +96,16 @@ describe('Aged Brie', function () {
         expect(item.quality).toBe(11);
     });
 
+    it('should not increase quality before sellIn when quality is at max', () => {
+        const item = new Item('Aged Brie', 10, 50);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(9);
+        expect(item.quality).toBe(50);
+    });
+
     it('should increase quality by 2 on sellIn', function () {
         const item = new Item('Aged Brie', 0, 10);
         const gildedRose = new Shop([item]);
@@ -104,6 +114,16 @@ describe('Aged Brie', function () {
 
         expect(item.sellIn).toBe(-1);
         expect(item.quality).toBe(12);
+    });
+
+    it('should not increase quality on sellIn when quality is at max', () => {
+        const item = new Item('Aged Brie', 0, 50);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(-1);
+        expect(item.quality).toBe(50);
     });
 
     it('should increase quality by 2 past sellIn', function () {
@@ -116,11 +136,23 @@ describe('Aged Brie', function () {
         expect(item.quality).toBe(12);
     });
 
+    it('should not increase quality past sellIn when quality is at max', () => {
+        const item = new Item('Aged Brie', -1, 50);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(-2);
+        expect(item.quality).toBe(50);
+    });
+
     it('should not increase quality above 50', function () {
         const items = [
             new Item('Aged Brie', 10, 50),
+            new Item('Aged Brie', 0, 49),
             new Item('Aged Brie', 0, 50),
-            new Item('Aged Brie', -10, 50),
+            new Item('Aged Brie', -5, 49),
+            new Item('Aged Brie', -5, 50),
         ];
         const gildedRose = new Shop(items);
 
@@ -130,7 +162,15 @@ describe('Aged Brie', function () {
         expect(items[0].quality).toBe(50);
         expect(items[1].sellIn).toBe(-1);
         expect(items[1].quality).toBe(50);
-        expect(items[2].sellIn).toBe(-11);
+        expect(items[2].sellIn).toBe(-1);
         expect(items[2].quality).toBe(50);
+        expect(items[3].sellIn).toBe(-6);
+        expect(items[3].quality).toBe(50);
+        expect(items[4].sellIn).toBe(-6);
+        expect(items[4].quality).toBe(50);
     });
+});
+
+describe('Sulfuras', function () {
+
 });
