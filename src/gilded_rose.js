@@ -6,10 +6,38 @@ class Item {
   }
 }
 
+const Updater = (qualityChange, sellInChange = -1, min = 0, max = 50) => (item) => {
+  /** implement item update */
+}
+const StrategyNode = (condition, strategy) => ({ condition, strategy });
+
+const findStrategyNode = (data, strategySet) => {
+  /** implement find strategy */
+}
+
+const itemsStrategySets = [
+  StrategyNode(item => item.name === "Aged Brie", () => [
+    StrategyNode(sellIn => sellIn >= 5, Updater(1)),
+    StrategyNode(sellIn => sellIn >= 0, Updater(2)),
+    StrategyNode(() => true, Updater(2))
+    ]),
+  StrategyNode(item => item.name === "Backstage passes to a TAFKAL80ETC concert", () => [
+    StrategyNode(sellIn => sellIn >= 10, Updater(1)),
+    StrategyNode(sellIn => sellIn >= 5, Updater(2)),
+    ]),
+]
+
+const updateItem = (item) => findStrategyNode(item.sellIn, findStrategyNode(item, itemsStrategySets).strategy()).strategy(item)
+
 class Shop {
   constructor(items=[]){
     this.items = items;
   }
+
+  updateQuality() {
+    return this.items.forEach(updateItem);
+  }
+/*
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
@@ -59,9 +87,14 @@ class Shop {
 
     return this.items;
   }
+*/
 }
 
 module.exports = {
   Item,
-  Shop
+  Shop,
+
+  Updater,
+  StrategyNode,
+  findStrategyNode
 }
