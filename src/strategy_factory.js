@@ -4,13 +4,13 @@ const {DropToZero, DoNothing, UpdateQuality} = require('./actions');
 const findStrategy = (strategySet, item) => {
     const found = strategySet.find(strategy => strategy.condition(item));
     return found.children ? findStrategy(found.children, item) : found;
-}
+};
 
 const StrategySet = strategySet => {
     return {
         handle: item => findStrategy(strategySet, item).action(item)
     }
-}
+};
 
 const strategyFactory = StrategySet([
     When(item => item.name === "Aged Brie").then([
@@ -40,4 +40,4 @@ const strategyFactory = StrategySet([
     ])
 ]);
 
-module.exports = {strategyFactory, StrategySet}
+module.exports = {strategyFactory, StrategySet};

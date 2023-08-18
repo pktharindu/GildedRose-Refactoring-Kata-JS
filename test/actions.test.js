@@ -1,7 +1,6 @@
 const {Item} = require('../src/gilded_rose');
 const {DropToZero, DoNothing, UpdateQuality} = require('../src/actions');
 
-
 describe('Actions', function () {
     it('can drop quality to zero', function () {
         const item = new Item('test', 10, 10);

@@ -2,7 +2,7 @@ const When = (condition) => {
     return {
         condition,
         then: arg => {
-            if(Array.isArray(arg)) {
+            if (Array.isArray(arg)) {
                 return {
                     condition,
                     children: arg
@@ -15,15 +15,15 @@ const When = (condition) => {
             }
         }
     }
-}
+};
 
 const Otherwise = (action) => {
     return {
         condition: () => true,
         action
     }
-}
+};
 
-const Always = Otherwise
+const Always = Otherwise;
 
-module.exports = {When, Otherwise, Always}
+module.exports = {When, Otherwise, Always};

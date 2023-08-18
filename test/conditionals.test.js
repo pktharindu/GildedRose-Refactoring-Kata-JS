@@ -15,6 +15,12 @@ describe('Strategy', function () {
         expect(strategy.children).toBe(undefined);
     });
 
+    it('builds default strategy', function () {
+        const strategy = Otherwise('bbb');
+        expect(strategy.condition()).toBe(true);
+        expect(strategy.action).toBe('bbb');
+    });
+
     it('builds catch all strategy', function () {
         const strategy = Always('bbb');
         expect(strategy.condition()).toBe(true);
