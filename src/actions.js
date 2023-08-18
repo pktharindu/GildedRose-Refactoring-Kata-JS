@@ -1,8 +1,6 @@
-const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-
 const Actions = (qualityChange, sellInChange = -1, min = 0, max = 50) => (item) => {
     item.sellIn += sellInChange;
-    item.quality = clamp(item.quality + qualityChange, min, max);
+    item.quality = Math.max(min, Math.min(max, item.quality + qualityChange));
 };
 
 const DropToZero = Actions(-Infinity);
