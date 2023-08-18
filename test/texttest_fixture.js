@@ -12,13 +12,12 @@ const items = [
   new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
 
   // This Conjured item does not work properly yet
-  new Item("Conjured Mana Cake", 3, 6),
+  //new Item("Conjured Mana Cake", 3, 6),
 ];
 
-const days = Number(process.argv[2]) || 2;
+const days = Number(process.argv[2]) || 25;
 const gildedRose = new Shop(items);
 
-console.log("OMGHAI!");
 for (let day = 0; day < days; day++) {
   console.log(`\n-------- day ${day} --------`);
   console.log("name, sellIn, quality");
