@@ -27,7 +27,6 @@ const BackstagePassUpdateStrategy = (item) => {
     }
 
     item.quality = Math.min(maxQuality, item.quality);
-
     item.sellIn -= 1;
 };
 
@@ -36,7 +35,7 @@ const ConjuredUpdateStrategy = (item) => {
     item.sellIn -= 1;
 };
 
-const NullUpdateStrategy = () => {};
+const NullUpdateStrategy = () => { /* do nothing*/ };
 
 const updateStrategyLookup = {
     'Aged Brie': AgedBrieUpdateStrategy,
@@ -47,7 +46,6 @@ const updateStrategyLookup = {
 
 const updateItem = (item) => {
     const updateStrategy = updateStrategyLookup[item.name] || NormalUpdateStrategy;
-
     updateStrategy(item);
 };
 
