@@ -1,7 +1,18 @@
 const {When, Otherwise, Always} = require('./conditionals');
 const {DropToZero, DoNothing, UpdateQuality} = require('./actions');
 
-let strategySets = [
+const findStrategy = (strategySet, item) => {
+    const found = strategySet.find(strategy => strategy.condition(item));
+    return found.children ? findStrategy(found.children, item) : found;
+}
+
+const StrategySet = strategySet => {
+    return {
+        execute: item => findStrategy(strategySet, item).action(item)
+    }
+}
+
+const strategies = StrategySet([
     When(item => item.name === "Aged Brie").then([
         When(item => item.sellIn > 0).then(UpdateQuality(1)),
         Otherwise(UpdateQuality(2))
@@ -27,10 +38,6 @@ let strategySets = [
         When(item => item.sellIn > 0).then(UpdateQuality(-1)),
         Otherwise(UpdateQuality(-2))
     ])
-];
+]);
 
-const getStrategySet = (item) => strategySets.find(strategySet => strategySet.condition(item)).strategySet;
-
-const applyStrategy = (item) => getStrategySet(item).find(strategy => strategy.condition(item)).action(item);
-
-module.exports = {applyStrategy, getStrategySet}
+module.exports = {strategies, StrategySet}

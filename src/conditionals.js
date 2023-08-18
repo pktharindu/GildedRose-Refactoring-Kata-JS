@@ -1,9 +1,19 @@
 const When = (condition) => {
     return {
         condition,
-        action: () => {
-        },
-        then: action => ({condition, action})
+        then: arg => {
+            if(Array.isArray(arg)) {
+                return {
+                    condition,
+                    children: arg
+                }
+            } else {
+                return {
+                    condition,
+                    action: arg
+                }
+            }
+        }
     }
 }
 
