@@ -1,7 +1,7 @@
 const {
-    BaseUpdateStrategy,
+    DefaultUpdateStrategy,
     AgedBrieUpdateStrategy,
-    SulfurasUpdateStrategy,
+    NullUpdateStrategy,
     BackstagePassUpdateStrategy,
     ConjuredUpdateStrategy,
 } = require('./update_strategies');
@@ -11,7 +11,7 @@ class Shop {
         this.items = items;
         this.updateStrategyLookup = {
             'Aged Brie': new AgedBrieUpdateStrategy,
-            'Sulfuras, Hand of Ragnaros': new SulfurasUpdateStrategy,
+            'Sulfuras, Hand of Ragnaros': new NullUpdateStrategy,
             'Backstage passes to a TAFKAL80ETC concert': new BackstagePassUpdateStrategy,
             'Conjured Mana Cake': new ConjuredUpdateStrategy,
         };
@@ -19,7 +19,7 @@ class Shop {
 
     updateQuality() {
         for (const item of this.items) {
-            const updateStrategy = this.updateStrategyLookup[item.name] || new BaseUpdateStrategy;
+            const updateStrategy = this.updateStrategyLookup[item.name] || new DefaultUpdateStrategy;
 
             updateStrategy.update(item);
         }

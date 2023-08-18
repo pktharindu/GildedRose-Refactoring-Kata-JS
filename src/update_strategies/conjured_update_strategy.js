@@ -1,6 +1,6 @@
-const BaseUpdateStrategy = require('./base_update_strategy');
+const DefaultUpdateStrategy = require('./default_update_strategy');
 
-class ConjuredUpdateStrategy extends BaseUpdateStrategy {
+class ConjuredUpdateStrategy extends DefaultUpdateStrategy {
     update(item) {
         item.quality -= 2;
 

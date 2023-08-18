@@ -1,6 +1,6 @@
-const BaseUpdateStrategy = require('./base_update_strategy');
+const DefaultUpdateStrategy = require('./default_update_strategy');
 
-class AgedBrieUpdateStrategy extends BaseUpdateStrategy {
+class AgedBrieUpdateStrategy extends DefaultUpdateStrategy {
     update(item) {
         item.quality += 1;
 

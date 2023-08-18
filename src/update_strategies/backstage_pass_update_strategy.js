@@ -1,6 +1,6 @@
-const BaseUpdateStrategy = require('./base_update_strategy');
+const DefaultUpdateStrategy = require('./default_update_strategy');
 
-class BackstagePassUpdateStrategy extends BaseUpdateStrategy {
+class BackstagePassUpdateStrategy extends DefaultUpdateStrategy {
     update(item) {
         item.quality += 1;
 

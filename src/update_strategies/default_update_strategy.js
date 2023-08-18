@@ -1,4 +1,4 @@
-class BaseUpdateStrategy {
+class DefaultUpdateStrategy {
     constructor() {
         this.minQuality = 0;
         this.maxQuality = 50;
@@ -18,4 +18,4 @@ class BaseUpdateStrategy {
     }
 }
 
-module.exports = BaseUpdateStrategy;
+module.exports = DefaultUpdateStrategy;
