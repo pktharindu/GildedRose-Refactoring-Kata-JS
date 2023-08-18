@@ -1,7 +1,7 @@
-const {getStrategySet, resetStrategySets, registerStrategySet, executeStrategy} = require('../src/strategy_set');
-const {When, Otherwise} = require('../src/strategy');
+const {getStrategySet, resetStrategySets, registerStrategySet, executeStrategy} = require('../src/strategy_factory');
+const {When, Otherwise} = require('../src/conditionals');
 
-describe('StrategySet', function () {
+describe('Strategy factory', function () {
     beforeEach(() => {
         resetStrategySets();
     });

@@ -1,4 +1,4 @@
-const {When, Otherwise, Always} = require('../src/strategy');
+const {When, Otherwise, Always} = require('../src/conditionals');
 
 describe('Strategy', function () {
     it('builts strategy', function () {
