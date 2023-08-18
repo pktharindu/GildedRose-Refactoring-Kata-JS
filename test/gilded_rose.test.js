@@ -2,7 +2,7 @@ const Shop = require('../src/gilded_rose');
 const Item = require('../src/item');
 const fs = require('fs');
 
-describe.skip('Golden master', function () {
+describe('Golden master', function () {
     it('should not break golden master', function () {
         const items = [
             new Item('+5 Dexterity Vest', 10, 20),
@@ -44,6 +44,16 @@ describe('Normal', function () {
         gildedRose.updateQuality();
 
         expect(item.sellIn).toBe(9);
+        expect(item.quality).toBe(9);
+    });
+
+    it('should decrease sellIn and quality by 1 a day before sellIn', function () {
+        const item = new Item('normal', 1, 10);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(0);
         expect(item.quality).toBe(9);
     });
 
@@ -94,6 +104,16 @@ describe('Aged Brie', function () {
         gildedRose.updateQuality();
 
         expect(item.sellIn).toBe(9);
+        expect(item.quality).toBe(11);
+    });
+
+    it('should increase quality by 1 a day before sellIn', function () {
+        const item = new Item('Aged Brie', 1, 10);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(0);
         expect(item.quality).toBe(11);
     });
 
@@ -172,7 +192,7 @@ describe('Aged Brie', function () {
     });
 });
 
-describe.skip('Sulfuras', function () {
+describe('Sulfuras', function () {
     it('should not change sellIn or quality before sellIn', function () {
         const item = new Item('Sulfuras, Hand of Ragnaros', 10, 80);
         const gildedRose = new Shop([item]);
@@ -204,7 +224,7 @@ describe.skip('Sulfuras', function () {
     });
 });
 
-describe.skip('Backstage pass', function () {
+describe('Backstage pass', function () {
     it('should increase quality by 1 when sellIn is > 10', function () {
         const item = new Item('Backstage passes to a TAFKAL80ETC concert', 11, 10);
         const gildedRose = new Shop([item]);
@@ -225,7 +245,7 @@ describe.skip('Backstage pass', function () {
         expect(item.quality).toBe(12);
     });
 
-    it('should increase quality by 2 when sellIn is 6', function () {
+    it('should increase quality by 2 when sellIn is < 10', function () {
         const item = new Item('Backstage passes to a TAFKAL80ETC concert', 6, 10);
         const gildedRose = new Shop([item]);
 
@@ -245,7 +265,17 @@ describe.skip('Backstage pass', function () {
         expect(item.quality).toBe(13);
     });
 
-    it('should increase quality by 3 when sellIn is 1', function () {
+    it('should increase quality by 3 when sellIn is < 5', function () {
+        const item = new Item('Backstage passes to a TAFKAL80ETC concert', 3, 10);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(2);
+        expect(item.quality).toBe(13);
+    });
+
+    it('should increase quality by 3 a day before sellIn', function () {
         const item = new Item('Backstage passes to a TAFKAL80ETC concert', 1, 10);
         const gildedRose = new Shop([item]);
 
@@ -305,6 +335,16 @@ describe.skip('Conjured', function () {
         gildedRose.updateQuality();
 
         expect(item.sellIn).toBe(9);
+        expect(item.quality).toBe(8);
+    });
+
+    it('should decrease quality by 2 a day before sellIn', function () {
+        const item = new Item('Conjured Mana Cake', 1, 10);
+        const gildedRose = new Shop([item]);
+
+        gildedRose.updateQuality();
+
+        expect(item.sellIn).toBe(1);
         expect(item.quality).toBe(8);
     });
 
