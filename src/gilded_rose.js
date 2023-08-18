@@ -14,7 +14,7 @@ class Shop {
     }
 
     updateQuality() {
-        return this.items.forEach(strategyFactory.execute);
+        return this.items.forEach(strategyFactory.handle);
     }
 }
 

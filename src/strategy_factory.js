@@ -8,7 +8,7 @@ const findStrategy = (strategySet, item) => {
 
 const StrategySet = strategySet => {
     return {
-        execute: item => findStrategy(strategySet, item).action(item)
+        handle: item => findStrategy(strategySet, item).action(item)
     }
 }
 
