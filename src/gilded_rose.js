@@ -1,5 +1,5 @@
 const { When, Otherwise, Always } = require('./strategy');
-const { registerStrategySet, ececuteStrategy } = require('./strategy_set');
+const { registerStrategySet, executeStrategy } = require('./strategy_set');
 const { UpBy1, UpBy2, UpBy3, Nullify, Noop, DownBy1, DownBy2, DownBy4 } = require('./actions');
 
 class Item {
@@ -42,7 +42,7 @@ class Shop {
   }
 
   updateQuality() {
-    return this.items.forEach(ececuteStrategy);
+    return this.items.forEach(executeStrategy);
   }
 }
 

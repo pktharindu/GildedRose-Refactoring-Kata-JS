@@ -1,4 +1,6 @@
-const strategySets = [];
+var strategySets = [];
+
+const resetStrategySets = () => strategySets = [];
 
 const registerStrategySet = (condition, strategySet) => {
 	strategySets.push({
@@ -9,6 +11,6 @@ const registerStrategySet = (condition, strategySet) => {
 
 const getStrategySet = (item) => strategySets.find(strategySet => strategySet.condition(item)).strategySet
 
-const ececuteStrategy = (item) => getStrategySet(item).find(strategy => strategy.condition(item)).action(item);
+const executeStrategy = (item) => getStrategySet(item).find(strategy => strategy.condition(item)).action(item);
 
-module.exports = { registerStrategySet, ececuteStrategy }
+module.exports = { registerStrategySet, executeStrategy, resetStrategySets, getStrategySet }
