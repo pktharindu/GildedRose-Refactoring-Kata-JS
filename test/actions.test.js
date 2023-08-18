@@ -1,4 +1,4 @@
-const { UpBy1, UpBy2, UpBy3, Nullify, Noop, DownBy1, DownBy2, DownBy4 } = require('../src/actions');
+const {UpQuality, Nullify, Noop, DownBy1, DownBy2, DownBy4} = require('../src/actions');
 
 const Item = () => ({
     sellIn: 10,
