@@ -1,12 +1,21 @@
 const When = (condition) => {
     return {
         condition,
-        action: () => {
-        },
-        then: action => ({condition, action})
+        then: arg => {
+            if(Array.isArray(arg)) {
+                return {
+                    condition,
+                    strategySet: arg
+                }
+            } else {
+                return {
+                    condition,
+                    action: arg
+                }
+            }
+        }
     }
 }
-
 const Otherwise = (action) => {
     return {
         condition: () => true,
@@ -16,4 +25,6 @@ const Otherwise = (action) => {
 
 const Always = Otherwise
 
-module.exports = {When, Otherwise, Always}
+const Condition = item => strategy => strategy.condition(item)
+
+module.exports = {When, Otherwise, Always, Condition}

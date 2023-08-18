@@ -1,5 +1,4 @@
-const {When, Otherwise, Always} = require('./strategy');
-const {registerStrategySet, executeStrategy} = require('./strategy_set');
+const {When, Otherwise, Always, Condition} = require('./strategy');
 const {DropToZero, NoNothing, UpdateQuality} = require('./actions');
 
 class Item {
@@ -10,31 +9,35 @@ class Item {
     }
 }
 
-registerStrategySet(item => item.name === "Aged Brie", [
-    When(item => item.sellIn > 0).then(UpdateQuality(1)),
-    Otherwise(UpdateQuality(2))
-]);
+const strategySets = [
+    When(item => item.name === "Aged Brie").then([
+        When(item => item.sellIn > 0).then(UpdateQuality(1)),
+        Otherwise(UpdateQuality(2))
+    ]),
 
-registerStrategySet(item => item.name === "Backstage passes to a TAFKAL80ETC concert", [
-    When(item => item.sellIn > 10).then(UpdateQuality(1)),
-    When(item => item.sellIn > 5).then(UpdateQuality(2)),
-    When(item => item.sellIn > 0).then(UpdateQuality(3)),
-    Otherwise(DropToZero)
-])
+    When(item => item.name === "Backstage passes to a TAFKAL80ETC concert").then([
+        When(item => item.sellIn > 10).then(UpdateQuality(1)),
+        When(item => item.sellIn > 5).then(UpdateQuality(2)),
+        When(item => item.sellIn > 0).then(UpdateQuality(3)),
+        Otherwise(DropToZero)
+    ]),
 
-registerStrategySet(item => item.name === "Sulfuras, Hand of Ragnaros", [
-    Always(NoNothing)
-]);
+    When(item => item.name === "Sulfuras, Hand of Ragnaros").then([
+        Always(NoNothing)
+    ]),
 
-registerStrategySet(item => item.name === "Conjured Mana Cake", [
-    When(item => item.sellIn > 0).then(UpdateQuality(-2)),
-    Otherwise(UpdateQuality(-4))
-]);
+    When(item => item.name === "Conjured Mana Cake").then([
+        When(item => item.sellIn > 0).then(UpdateQuality(-2)),
+        Otherwise(UpdateQuality(-4))
+    ]),
 
-registerStrategySet(() => true, [
-    When(item => item.sellIn > 0).then(UpdateQuality(-1)),
-    Otherwise(UpdateQuality(-2))
-]);
+    When(() => true).then([
+        When(item => item.sellIn > 0).then(UpdateQuality(-1)),
+        Otherwise(UpdateQuality(-2))
+    ])
+]
+
+const updateQuality = (item) => strategySets.find(Condition(item)).strategySet.find(Condition(item)).action(item);
 
 class Shop {
     constructor(items = []) {
@@ -42,7 +45,7 @@ class Shop {
     }
 
     updateQuality() {
-        return this.items.forEach(executeStrategy);
+        return this.items.forEach(updateQuality);
     }
 }
 
