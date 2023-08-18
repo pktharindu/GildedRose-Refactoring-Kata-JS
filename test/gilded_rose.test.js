@@ -204,7 +204,7 @@ describe('Sulfuras', function () {
     });
 });
 
-describe('Backstage passes', function () {
+describe('Backstage pass', function () {
     it('should increase quality by 1 when sellIn is > 10', function () {
         const item = new Item('Backstage passes to a TAFKAL80ETC concert', 11, 10);
         const gildedRose = new Shop([item]);
