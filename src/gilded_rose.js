@@ -1,5 +1,5 @@
 const {When, Otherwise, Always, StrategySet} = require('./strategy');
-const {DropToZero, NoNothing, UpdateQuality} = require('./actions');
+const {DropToZero, DoNothing, UpdateQuality} = require('./actions');
 
 class Item {
     constructor(name, sellIn, quality) {
@@ -23,7 +23,7 @@ const strategies = StrategySet([
     ]),
 
     When(item => item.name === "Sulfuras, Hand of Ragnaros").then([
-        Always(NoNothing)
+        Always(DoNothing)
     ]),
 
     When(item => item.name === "Conjured Mana Cake").then([
