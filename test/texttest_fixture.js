@@ -9,9 +9,7 @@ const items = [
     new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20),
     new Item('Backstage passes to a TAFKAL80ETC concert', 10, 49),
     new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49),
-
-    // This Conjured item does not work properly yet
-    //new Item("Conjured Mana Cake", 3, 6),
+    new Item('Conjured Mana Cake', 3, 6),
 ];
 
 const days = Number(process.argv[2]) || 25;
