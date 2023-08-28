@@ -1,67 +1,68 @@
+const minQuality = 0;
+const maxQuality = 50;
+
+const NormalUpdateStrategy = (item) => {
+    item.quality = Math.max(minQuality, item.sellIn <= 0 ? item.quality - 2 : item.quality - 1);
+    item.sellIn -= 1;
+};
+
+const AgedBrieUpdateStrategy = (item) => {
+    item.quality = Math.min(maxQuality, item.sellIn <= 0 ? item.quality + 2 : item.quality + 1);
+    item.sellIn -= 1;
+};
+
+const BackstagePassUpdateStrategy = (item) => {
+    const qualityChanges = [
+        { condition: (sellIn) => sellIn <= 0, qualityChange: -item.quality },
+        { condition: (sellIn) => sellIn <= 5, qualityChange: 3 },
+        { condition: (sellIn) => sellIn <= 10, qualityChange: 2 },
+        { condition: () => true, qualityChange: 1 }
+    ];
+
+    const { qualityChange } = qualityChanges.find(({ condition }) => condition(item.sellIn));
+
+    item.quality = Math.min(maxQuality, Math.max(minQuality, item.quality + qualityChange));
+    item.sellIn -= 1;
+};
+
+const ConjuredUpdateStrategy = (item) => {
+    item.quality = Math.max(minQuality, item.sellIn <= 0 ? item.quality - 4 : item.quality - 2);
+    item.sellIn -= 1;
+};
+
+const NullUpdateStrategy = () => { /* do nothing*/ };
+
+const updateStrategyLookup = {
+    'Aged Brie': AgedBrieUpdateStrategy,
+    'Sulfuras, Hand of Ragnaros': NullUpdateStrategy,
+    'Backstage passes to a TAFKAL80ETC concert': BackstagePassUpdateStrategy,
+    'Conjured Mana Cake': ConjuredUpdateStrategy,
+};
+
+const updateItem = (item) => {
+    const updateStrategy = updateStrategyLookup[item.name] || NormalUpdateStrategy;
+    updateStrategy(item);
+};
+
 class Item {
-  constructor(name, sellIn, quality){
-    this.name = name;
-    this.sellIn = sellIn;
-    this.quality = quality;
-  }
+    constructor(name, sellIn, quality) {
+        this.name = name;
+        this.sellIn = sellIn;
+        this.quality = quality;
+    }
 }
 
 class Shop {
-  constructor(items=[]){
-    this.items = items;
-  }
-  updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1;
-          }
-        }
-      } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1;
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-          }
-        }
-      }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].quality = this.items[i].quality - 1;
-              }
-            }
-          } else {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality;
-          }
-        } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1;
-          }
-        }
-      }
+    constructor(items = []) {
+        this.items = items;
     }
 
-    return this.items;
-  }
+    updateQuality() {
+        return this.items.forEach(updateItem);
+    }
 }
 
 module.exports = {
-  Item,
-  Shop
-}
+    Item,
+    Shop
+};
